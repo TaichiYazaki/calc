@@ -7,64 +7,65 @@ import (
 	"strconv"
 )
 
-func handler(w http.ResponseWriter, r *http.Request, result int) {
-
+type Calc struct {
+	LeftNum  int
+	RightNum int
+	Operator string
+	Result   int
 }
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles("template/view.html")
-
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	if err := t.Execute(w, nil); err != nil {
 		log.Fatal(err)
 	}
 }
 
 func calcHandler(w http.ResponseWriter, r *http.Request) {
-	var num1 int
-	var num2 int
-	num1, _ = strconv.Atoi(r.FormValue("num1"))
-	num2, _ = strconv.Atoi(r.FormValue("num2"))
-	op := r.FormValue("op")
-	if op == "add" {
-		result := num1 + num2
+	var cal Calc
+	cal.Operator = r.FormValue("operator")
+	cal.LeftNum, _ = strconv.Atoi(r.FormValue("leftNum"))
+	cal.RightNum, _ = strconv.Atoi(r.FormValue("rightNum"))
+
+	if cal.Operator == "add" {
+		cal.Result = cal.LeftNum + cal.RightNum
 		t, err := template.ParseFiles("template/view.html")
 		if err != nil {
 			log.Fatal(err)
 		}
-		if err := t.Execute(w, result); err != nil {
+		if err := t.Execute(w, cal); err != nil {
 			log.Fatal(err)
 		}
-	} else if op == "sub" {
-		result := num1 - num2
-		t, err := template.ParseFiles("template/view.html")
-		if err != nil {
-			log.Fatal(err)
-		}
-		if err := t.Execute(w, result); err != nil {
-			log.Fatal(err)
-		}
-	} else if op == "mult" {
-		result := num1 * num2
-		t, err := template.ParseFiles("template/view.html")
-		if err != nil {
-			log.Fatal(err)
-		}
-		if err := t.Execute(w, result); err != nil {
-			log.Fatal(err)
-		}
-	} else {
-		result := num1 / num2
-		t, err := template.ParseFiles("template/view.html")
-		if err != nil {
-			log.Fatal(err)
-		}
-		if err := t.Execute(w, result); err != nil {
-			log.Fatal(err)
-		}
+		// } else if cal.Operator == "sub" {
+		// 	cal.Result = cal.LeftNum - cal.RightNum
+		// 	t, err := template.ParseFiles("template/view.html")
+		// 	if err != nil {
+		// 		log.Fatal(err)
+		// 	}
+		// 	if err := t.Execute(w, cal); err != nil {
+		// 		log.Fatal(err)
+		// 	}
+		// } else if cal.Operator == "mult" {
+		// 	cal.Result = cal.LeftNum * cal.RightNum
+		// 	t, err := template.ParseFiles("template/view.html")
+		// 	if err != nil {
+		// 		log.Fatal(err)
+		// 	}
+		// 	if err := t.Execute(w, cal); err != nil {
+		// 		log.Fatal(err)
+		// 	}
+		// } else {
+		// 	cal.Result = cal.LeftNum / cal.RightNum
+		// 	t, err := template.ParseFiles("template/view.html")
+		// 	if err != nil {
+		// 		log.Fatal(err)
+		// 	}
+		// 	if err := t.Execute(w, cal); err != nil {
+		// 		log.Fatal(err)
+		// 	}
 	}
 }
 

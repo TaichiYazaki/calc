@@ -9,16 +9,20 @@
 <body>
     <h1>計算アプリ</h1>
     <form action="/calc" method="post">
-        左項目：<input type="number" name="num1"><br>
-        右項目：<input type="number" name="num2"><br>
+        左項目：<input type="number" name="leftNum"><br>
+        右項目：<input type="number" name="rightNum"><br>
         演算子：
-        <input type="radio" name="op" value="add" checked>+
-        <input type="radio" name="op" value="sub">-
-        <input type="radio" name="op" value="mult">×
-        <input type="radio" name="op" value="div">÷<br>
+        <input type="radio" name="operator" value="add" checked>+
+        <input type="radio" name="operator" value="sub">-
+        <input type="radio" name="operator" value="mult">×
+        <input type="radio" name="operator" value="div">÷<br>
         <input type="submit" name="計算">
     </form>
     <hr>
-    <h1>{{.}}</h1>
+    <p>[フォームの入力値]</p>
+    <p>左項目：{{.LeftNum}}</p>
+    <p>右項目：{{.RightNum}}</p>
+    <p>演算子：{{.Operator}}</p>
+    <p>演算結果：{{.Result}}</p>
 </body>
 </html>
